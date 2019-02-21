@@ -180,15 +180,13 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
 
             // TODO 35) UN POKEMON PEUT AVOIR PLUSIEURS TYPES, N'AFFICHER QUE LE PREMIER POUR LE MOMENT (BONUS SI VOUS AFFICHEZ TOUT LES TYPES D'UN POKEMON)
             String types="";
-            TextView typesTextView;
+
 
             for(Type t : pokemon.getTypes()){
-                typesTextView=new TextView( pokemonType.getContext() );
-                typesTextView.setText( t.getType().getName() );
-                lineartypes.addView( typesTextView );
+                types+=t.getType().getName()+" ";
             }
 
-
+            pokemonType.setText( types );
         }
     }
 
@@ -203,6 +201,12 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
 
         if(PokemonGestureListener.RIGHT==direction){
             nextPokemon++;
+        }
+        if(nextPokemon>idMaxPokemon){
+            nextPokemon=1;
+        }
+        if(nextPokemon<0){
+            nextPokemon=idMaxPokemon;
         }
         navigationManager.startPokemonDetail( nextPokemon,true );
 
