@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Pokedex</string>
+    <string name="exit_message">Exit ?</string>
+    <string name="action_search">Rechercher</string>
+    <string name="content_description">Image of the pokemon</string>
+    <string name="content_description_capture">Image of a Pokeball to capture a pokemon</string>
+    <string name="base_exp">BASE EXP</string>
+    <string name="ht">HT</string>
+    <string name="wt">WT</string>
+    <string name="types">TYPES</string>
+    <string name="number">No. %d</string>
+    <string name="exp" tools:ignore="PluralsCandidate">%d exp</string>
+    <string name="height">%d m</string>
+    <string name="weight">%d kg</string>
+</resources>
