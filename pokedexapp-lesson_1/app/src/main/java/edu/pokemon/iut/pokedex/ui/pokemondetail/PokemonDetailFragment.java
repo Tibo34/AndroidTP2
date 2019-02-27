@@ -1,8 +1,10 @@
 package edu.pokemon.iut.pokedex.ui.pokemondetail;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.transition.TransitionInflater;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +23,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import dagger.multibindings.IntoMap;
 import edu.pokemon.iut.pokedex.PokedexApp;
 import edu.pokemon.iut.pokedex.R;
 import edu.pokemon.iut.pokedex.architecture.BaseFragment;
@@ -36,6 +44,8 @@ import edu.pokemon.iut.pokedex.architecture.NavigationManager;
 import edu.pokemon.iut.pokedex.architecture.listener.PokemonGestureListener;
 import edu.pokemon.iut.pokedex.data.model.Pokemon;
 import edu.pokemon.iut.pokedex.data.model.Type;
+
+import static edu.pokemon.iut.pokedex.R.color.fire;
 
 /**
  * Fragment to show Unique Pokemon
@@ -53,11 +63,20 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
     /* VIEWS */
     // TODO TOUT EST A FAIRE AVEC BUTTERKNIFE ET LES VUES SONT CELLES CREES DANS pokemon_detail_layout
     // TODO 24) BINDER LE CONSTRAINTLAYOUT GLOBAL
+
     @BindView( R.id.cl_pokemon_detail )
     ConstraintLayout constraintLayout;
+    @BindView( R.id.linearTypesPokemon )
+    LinearLayout linearTypes;
+    @BindView( R.id.linearTypesHorizontal )
+    LinearLayout layoutHorizont;
     // TODO 25) BINDER L'IMAGEVIEW DE L'IMAGE DU POKEMON
     @BindView( R.id.pokemon_Image )
     ImageView pokemonImageView;
+    @BindView( R.id.pokemon_Type_Color )
+    ImageView imageType;
+    @BindView(R.id.pokemon_Type_Color2)
+    ImageView imageType2;
     // TODO 26) BINDER LA TEXTVIEW POUR LE NUMERO DU POKEMON
     @BindView( R.id.pokemon_id )
     TextView pokemonIdTextView;
@@ -76,6 +95,9 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
     // TODO 31) BINDER LA TEXTVIEW POUR LE TYPE DU POKEMON
     @BindView( R.id.pokemon_type )
     TextView pokemonType;
+    @BindView( R.id.pokemon_type2 )
+    TextView pokemonType2;
+
 
     /* ATTRIBUTES */
     private int pokemonId;
@@ -158,11 +180,16 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
      *
      * @param pokemon {@link Pokemon} to show
      */
+    @TargetApi(Build.VERSION_CODES.M)
     private void initView(Pokemon pokemon) {
         if(pokemon != null) {
             if (getContext() != null) {
                 // TODO 32) UTILISER GLIDE POUR TELECHARGER L'IMAGE DU POKEMON DANS L'IMAGEVIEW
-                Glide.with( this ).load( pokemon.getSpritesString() ).into(pokemonImageView);
+                RequestOptions options = new RequestOptions()
+                        .diskCacheStrategy( DiskCacheStrategy.AUTOMATIC)
+                        .placeholder(R.drawable.ic_launcher_pokeball)
+                        .centerCrop();
+                Glide.with( getContext() ).load( pokemon.getSpritesString() ).apply(options).into(pokemonImageView);
             }
 
             //If we can Navigate between pokemons we show his name on the actionBar, else we keep the default name
@@ -179,16 +206,63 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
 
 
             // TODO 35) UN POKEMON PEUT AVOIR PLUSIEURS TYPES, N'AFFICHER QUE LE PREMIER POUR LE MOMENT (BONUS SI VOUS AFFICHEZ TOUT LES TYPES D'UN POKEMON)
-            String types="";
-
-
-            for(Type t : pokemon.getTypes()){
-                types+=t.getType().getName()+" ";
+            TextView type;
+            ImageView colorView;
+            LinearLayout layout;
+            String typeColor=pokemon.getTypes().get( 0 ).getType().getName();
+            int color=getColorType( typeColor );
+            pokemonType.setText( pokemon.getTypes().get( 0 ).getType().getName() );
+            imageType.setColorFilter( getContext().getColor( color ) );
+            if(pokemon.getTypes().size()>1){
+                pokemonType2.setText( pokemon.getTypes().get( 1 ).getType().getName() );
+                pokemonType2.setVisibility( View.VISIBLE );
+                color=getColorType( pokemon.getTypes().get( 1 ).getType().getName() );
+                imageType2.setColorFilter( getContext().getColor( color) );
+                imageType2.setVisibility( View.VISIBLE );
             }
 
-            pokemonType.setText( types );
+
         }
     }
+    
+    public int getColorType(String str){
+        switch (str){
+            case "fire":
+                 return R.color.fire;
+            case "grass":
+                 return R.color.grass;
+            case "poison":
+                return R.color.poison;
+            case "flying":
+                return R.color.fighting;
+            case "water":
+                return R.color.water;
+            case "bug":
+                return R.color.bug;
+            case "electric":
+                return R.color.electric;
+            case "ground":
+                return R.color.ground;
+            case "fairy":
+                return R.color.fairy;
+            case "fighting":
+                 return R.color.fighting;
+            case "psychic":
+                return R.color.psychic;
+            case "steel":
+                 return R.color.steel;
+            case "ice":
+                return R.color.ice;
+            case "ghost":
+                return R.color.ghost;
+            case "dragon":
+                return R.color.dragon;
+        }
+        return R.color.fighting;
+
+    }
+
+
 
     @Override
     public void onSwipe(int direction) {

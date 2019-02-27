@@ -67,10 +67,72 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pokemon_Image"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.843">
 
 
         <!-- TODO 5) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'TYPES' -->
+
+        <LinearLayout
+            android:id="@+id/linearTypesPokemon"
+            android:layout_width="197dp"
+            android:layout_height="43dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/type"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linearTypesHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pokemon_type"
+                    android:layout_width="159dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+
+                <ImageView
+                    android:id="@+id/pokemon_Type_Color"
+                    android:layout_width="137dp"
+                    android:layout_height="19dp"
+                    android:layout_weight="1"
+                    app:srcCompat="?attr/colorButtonNormal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearTypesHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pokemon_type2"
+                    android:layout_width="159dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TextView"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/pokemon_Type_Color2"
+                    android:layout_width="137dp"
+                    android:layout_height="19dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    app:srcCompat="?attr/colorButtonNormal" />
+
+            </LinearLayout>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/type"
             android:layout_width="wrap_content"
@@ -85,96 +147,81 @@
             app:layout_constraintVertical_bias="0.035" />
 
         <!-- TODO 6) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LE TYPE DU POKEMON-->
-        <TextView
-            android:id="@+id/pokemon_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toEndOf="@+id/type"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/ht"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="48dp"
             android:text="@string/ht"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pokemon_ht"
-            app:layout_constraintHorizontal_bias="0.328"
+            app:layout_constraintHorizontal_bias="0.337"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/type"
-            app:layout_constraintVertical_bias="0.25" />
+            app:layout_constraintTop_toBottomOf="@+id/baseXp" />
 
         <TextView
             android:id="@+id/baseXp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="48dp"
             android:text="@string/base_exp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/pokemon_ht"
-            app:layout_constraintHorizontal_bias="0.034"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/type"
-            app:layout_constraintVertical_bias="0.083" />
+            app:layout_constraintTop_toBottomOf="@+id/type" />
 
         <TextView
             android:id="@+id/pokemon_ht"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="224dp"
+            android:layout_marginEnd="156dp"
             android:layout_marginTop="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pokemon_BaseExp"
-            app:layout_constraintVertical_bias="0.085" />
+            app:layout_constraintVertical_bias="0.229" />
 
         <TextView
             android:id="@+id/pokemon_BaseExp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="224dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="113dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="20dp"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pokemon_type" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/baseXp"
+            app:layout_constraintTop_toBottomOf="@+id/linearTypesPokemon" />
 
         <TextView
             android:id="@+id/WT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="36dp"
             android:text="@string/wt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ht" />
 
         <TextView
             android:id="@+id/pokemon_wt"
-            android:layout_width="wrap_content"
+            android:layout_width="62dp"
             android:layout_height="27dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="76dp"
             android:layout_marginTop="32dp"
             android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.132"
+            app:layout_constraintHorizontal_bias="0.013"
             app:layout_constraintStart_toEndOf="@+id/WT"
-            app:layout_constraintTop_toBottomOf="@+id/pokemon_ht" />
+            app:layout_constraintTop_toBottomOf="@+id/pokemon_ht"
+            app:layout_constraintVertical_bias="0.023" />
 
 
     </android.support.constraint.ConstraintLayout>
